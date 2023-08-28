@@ -47,6 +47,17 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
+  # Ui 관련
+  persistent_bottom_nav_bar: ^5.0.2
+  velocity_x: ^4.1.1
+
+  # 인스턴스 비교를 위한 패키지
+  equatable: ^2.0.5
+
+  # 고유의 id 값 생성을 위한 패키지
+  uuid: ^3.0.5
+
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
