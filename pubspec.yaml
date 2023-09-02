@@ -51,11 +51,20 @@ dev_dependencies:
   persistent_bottom_nav_bar: ^5.0.2
   velocity_x: ^4.1.1
 
+  # 화면을 생성하고 난 후 특정 작업을 하기 위한 패키지
+  after_layout: ^1.2.0
+
+  # dialog 편하게 만들려고 추가
+  nav: ^1.3.9
+
   # 인스턴스 비교를 위한 패키지
   equatable: ^2.0.5
 
   # 고유의 id 값 생성을 위한 패키지
   uuid: ^3.0.5
+
+  # 키보드 show / hide 제어에 도움을 약간 주는 패키지
+  keyboard_utils_fork: ^0.0.4
 
 
 # For information on the generic Dart part of this file, see the

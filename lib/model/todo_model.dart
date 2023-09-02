@@ -3,7 +3,6 @@ import 'package:uuid/uuid.dart';
 
 Uuid uuid = Uuid();
 
-
 class Todo extends Equatable {
   final String id;
   final String desc;

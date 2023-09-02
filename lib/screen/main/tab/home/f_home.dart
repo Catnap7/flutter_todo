@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todolist/screen/dialog/d_write_todo.dart';
 
 class HomeFragment extends StatefulWidget {
   const HomeFragment({super.key});
@@ -16,6 +17,15 @@ class _HomeFragmentState extends State<HomeFragment> {
         backgroundColor: Theme.of(context).colorScheme.background,
         centerTitle: true,
         title: Text('할일', style: Theme.of(context).textTheme.bodyMedium),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => WriteTodoDialog(),
+          );
+        },
+        child: const Icon(Icons.add),
       ),
       body: SingleChildScrollView(
         child: Column(

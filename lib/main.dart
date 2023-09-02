@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todolist/screen/dialog/d_write_todo.dart';
 import 'package:flutter_todolist/screen/main/tab/calendar/f_calendar.dart';
 import 'package:flutter_todolist/screen/main/tab/home/f_home.dart';
 import 'package:flutter_todolist/screen/main/tab/setting/f_setting.dart';
@@ -50,41 +51,44 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  final PersistentTabController _controller = PersistentTabController(initialIndex: 0);
-
+  final PersistentTabController _controller =
+      PersistentTabController(initialIndex: 0);
 
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
-        context,
-        controller: _controller,
-        screens: _buildScreens(),
-        items: _navBarsItems(),
-        confineInSafeArea: true,
-        backgroundColor: Theme.of(context).colorScheme.background, // Default is Colors.white.
-        handleAndroidBackButtonPress: true, // Default is true.
-        resizeToAvoidBottomInset: true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-        stateManagement: true, // Default is true.
-        hideNavigationBarWhenKeyboardShows: true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-        decoration: NavBarDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          colorBehindNavBar: Theme.of(context).colorScheme.background,
-        ),
-        popAllScreensOnTapOfSelectedTab: true,
-        popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: ItemAnimationProperties( // Navigation Bar's items animation properties.
-          duration: Duration(milliseconds: 200),
-          curve: Curves.ease,
-        ),
-        screenTransitionAnimation: ScreenTransitionAnimation( // Screen transition animation on change of selected tab.
-          animateTabTransition: true,
-          curve: Curves.ease,
-          duration: Duration(milliseconds: 200),
-        ),
-        navBarStyle: NavBarStyle.style6, // Choose the nav bar style with this property.
-      );
-
+      context,
+      controller: _controller,
+      screens: _buildScreens(),
+      items: _navBarsItems(),
+      confineInSafeArea: true,
+      backgroundColor: Theme.of(context).colorScheme.background,
+      // Default is Colors.white.
+      handleAndroidBackButtonPress: true,
+      // Default is true.
+      resizeToAvoidBottomInset: true,
+      // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
+      stateManagement: true,
+      // Default is true.
+      hideNavigationBarWhenKeyboardShows: true,
+      // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
+      decoration: NavBarDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        colorBehindNavBar: Theme.of(context).colorScheme.background,
+      ),
+      popAllScreensOnTapOfSelectedTab: true,
+      popActionScreens: PopActionScreensType.all,
+      itemAnimationProperties: ItemAnimationProperties(
+        duration: Duration(milliseconds: 200),
+        curve: Curves.ease,
+      ),
+      screenTransitionAnimation: ScreenTransitionAnimation(
+        animateTabTransition: true,
+        curve: Curves.ease,
+        duration: Duration(milliseconds: 200),
+      ),
+      navBarStyle: NavBarStyle.style6,
+    );
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() => [
@@ -100,12 +104,12 @@ class _MyHomePageState extends State<MyHomePage> {
           activeColorPrimary: Colors.teal,
           inactiveColorPrimary: Colors.grey,
           routeAndNavigatorSettings: RouteAndNavigatorSettings(
-            // initialRoute: "/",
-           /* routes: {
+              // initialRoute: "/",
+              /* routes: {
               "/first": (final context) => const HomeFragment(),
               "/second": (final context) => const CalendarFragment(),
             },*/
-          ),
+              ),
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.settings),
@@ -113,12 +117,12 @@ class _MyHomePageState extends State<MyHomePage> {
           activeColorPrimary: Colors.deepOrange,
           inactiveColorPrimary: Colors.grey,
           routeAndNavigatorSettings: RouteAndNavigatorSettings(
-            // initialRoute: "/",
-           /* routes: {
+              // initialRoute: "/",
+              /* routes: {
               "/first": (final context) => const HomeFragment(),
               "/second": (final context) => const CalendarFragment(),
             },*/
-          ),
+              ),
         ),
       ];
 }
