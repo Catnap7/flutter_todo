@@ -60,12 +60,11 @@ dev_dependencies:
   # 인스턴스 비교를 위한 패키지
   equatable: ^2.0.5
 
+  # 페이지 이동
+  go_router:
+
   # 고유의 id 값 생성을 위한 패키지
   uuid: ^3.0.5
-
-  # 키보드 show / hide 제어에 도움을 약간 주는 패키지
-  keyboard_utils_fork: ^0.0.4
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

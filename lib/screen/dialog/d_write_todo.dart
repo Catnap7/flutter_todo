@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_todolist/common/common.dart';
-import 'package:flutter_todolist/common/util/app_keyboard_util.dart';
 import 'package:flutter_todolist/common/widget/scaffold/bottom_dialog_scaffold.dart';
 import 'package:flutter_todolist/common/widget/w_round_container.dart';
 import 'package:after_layout/after_layout.dart';
@@ -13,7 +12,7 @@ class WriteTodoDialog extends DialogWidget {
   DialogState<WriteTodoDialog> createState() => _WriteTodoDialogState();
 }
 
-class _WriteTodoDialogState extends DialogState<WriteTodoDialog> with AfterLayoutMixin<WriteTodoDialog> {
+class _WriteTodoDialogState extends DialogState<WriteTodoDialog> {
   DateTime _selectedDate = DateTime.now();
   final textController = TextEditingController();
   final node = FocusNode();
@@ -58,10 +57,5 @@ class _WriteTodoDialogState extends DialogState<WriteTodoDialog> with AfterLayou
         ),
       ),
     );
-  }
-
-  @override
-  FutureOr<void> afterFirstLayout(BuildContext context) {
-    AppKeyboardUtil.show(context, node);
   }
 }
