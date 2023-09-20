@@ -12,12 +12,6 @@ class _HomeFragmentState extends State<HomeFragment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 34.0,
-        backgroundColor: Theme.of(context).colorScheme.background,
-        centerTitle: true,
-        title: Text('할일', style: Theme.of(context).textTheme.bodyMedium),
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(

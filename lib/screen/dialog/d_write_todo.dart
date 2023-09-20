@@ -13,12 +13,17 @@ class WriteTodoDialog extends DialogWidget {
 }
 
 class _WriteTodoDialogState extends DialogState<WriteTodoDialog> {
-  DateTime _selectedDate = DateTime.now();
+
+  final DateTime now = DateTime.now();
+  DateTime? _selectedDate = DateTime.now();
+  DateTime? _selectedEndPeriod;
   final textController = TextEditingController();
   final node = FocusNode();
 
   // 기간 설정 여부
   bool isPeriod = false;
+  // 구체적인 날짜 설정 여부
+  bool isDate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +107,39 @@ class _WriteTodoDialogState extends DialogState<WriteTodoDialog> {
               ),
               SwitchListTile.adaptive(
                 contentPadding: EdgeInsets.zero,
+                title: '날짜 설정'.text.bold.headline6(context).make(),
+                value: isDate,
+                onChanged: (value) {
+                  setState(() {
+                    isDate = value;
+                  });
+                },
+              ),
+              isDate ?
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () async {
+                      final result = await showDatePicker(
+                        context: context,
+                        initialDate: now,
+                        firstDate: DateTime(2022),
+                        lastDate: DateTime(2024),
+                      );
+                      if (result != null) {
+                        setState(() {
+                          _selectedDate = result;
+                        });
+                      }
+                    },
+                    icon: Icon(Icons.calendar_today),
+                  ),
+                  Text(_selectedDate.toString().split(' ')[0]),
+                ],
+              ) : Container(),
+
+              SwitchListTile.adaptive(
+                contentPadding: EdgeInsets.zero,
                 title: '기간 설정'.text.bold.headline6(context).make(),
                 value: isPeriod,
                 onChanged: (value) {
@@ -117,7 +155,7 @@ class _WriteTodoDialogState extends DialogState<WriteTodoDialog> {
                           onPressed: () async {
                             final result = await showDatePicker(
                               context: context,
-                              initialDate: _selectedDate,
+                              initialDate: now,
                               firstDate: DateTime(2022),
                               lastDate: DateTime(2024),
                             );
@@ -130,6 +168,31 @@ class _WriteTodoDialogState extends DialogState<WriteTodoDialog> {
                           icon: Icon(Icons.calendar_today),
                         ),
                         Text(_selectedDate.toString().split(' ')[0]),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        '~'.text.bodyText1(context).make(),
+                        IconButton(
+                          onPressed: () async {
+                            final result = await showDatePicker(
+                              context: context,
+                              initialDate: _selectedDate ?? _selectedDate! ,
+                              firstDate: DateTime(2022),
+                              lastDate: DateTime(2024),
+                            );
+                            if (result != null && result.isAfter(_selectedDate!) && isPeriod) {
+                              setState(() {
+                                _selectedDate = result;
+                              });
+                            }
+                          },
+                          icon: Icon(Icons.calendar_today),
+                        ),
+                        Text(_selectedDate.toString().split(' ')[0]),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        '까지'.text.bodyText1(context).make(),
                       ],
                     )
                   : Container(),

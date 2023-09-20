@@ -12,7 +12,7 @@ class BottomDialogScaffold extends StatelessWidget {
       body: Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.6,
+          height: MediaQuery.of(context).size.height * 0.8,
           padding: const EdgeInsets.only(
             left: 20,
             right: 20,
