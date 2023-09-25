@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todolist/common/common.dart';
 import 'package:flutter_todolist/common/widget/scaffold/transparent_scaffold.dart';
 
 class BottomDialogScaffold extends StatelessWidget {
@@ -12,7 +13,7 @@ class BottomDialogScaffold extends StatelessWidget {
       body: Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.8,
+          height: MediaQuery.of(context).size.height * 0.7,
           padding: const EdgeInsets.only(
             left: 20,
             right: 20,
@@ -27,7 +28,11 @@ class BottomDialogScaffold extends StatelessWidget {
           ),
           child: body,
         ),
-      )
+      ),
+      bottomNavigationBar: ElevatedButton(
+        onPressed: () {},
+        child: Text('저장'),
+      ).p(20),
     );
   }
 }

@@ -6,6 +6,7 @@ class RoundContainer extends StatelessWidget {
   final EdgeInsets? margin;
   final Color? color;
   final double radius;
+  final double? height;
 
   const RoundContainer({
     super.key,
@@ -13,6 +14,7 @@ class RoundContainer extends StatelessWidget {
     this.padding,
     this.margin,
     this.color,
+    this.height,
     this.radius = 10.0,
   });
 
@@ -21,6 +23,7 @@ class RoundContainer extends StatelessWidget {
     return Container(
       margin: margin,
       padding: padding,
+      height: height,
       decoration: BoxDecoration(
         color: color ?? Colors.white,
         borderRadius: BorderRadius.circular(radius),

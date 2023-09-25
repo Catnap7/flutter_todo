@@ -13,7 +13,6 @@ class WriteTodoDialog extends DialogWidget {
 }
 
 class _WriteTodoDialogState extends DialogState<WriteTodoDialog> {
-
   final DateTime now = DateTime.now();
   DateTime? _selectedDate = DateTime.now();
   DateTime? _selectedEndPeriod;
@@ -22,184 +21,206 @@ class _WriteTodoDialogState extends DialogState<WriteTodoDialog> {
 
   // 기간 설정 여부
   bool isPeriod = false;
+
   // 구체적인 날짜 설정 여부
   bool isDate = false;
 
   @override
   Widget build(BuildContext context) {
-    return BottomDialogScaffold(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+
       body: RoundContainer(
+        padding: const EdgeInsets.only(
+          left: 10,
+          right: 10,
+          bottom: 20,
+        ),
         color: context.backgroundColor,
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  '할일을 작성해주세요'.text.bold.headline6(context).make(),
-                  spacer,
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.calendar_month),
-                  ),
-                  height20,
-                ],
-              ),
-              TextFormField(
-                  controller: textController,
-                  focusNode: node,
-                  maxLength: 100,
-                  decoration: InputDecoration(
-                    hintText: '다이소가서 물건 사기 (세제, 치약 등)',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "제품명을 입력해주세요.";
-                    }
-                    return null;
-                  }),
-              '얼마나 중요한 일 인가요?'.text.bold.headline6(context).make(),
-              const SizedBox(height: 8),
-              SizedBox(
-                height: 50,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
+                  Row(
                     children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            isPeriod = !isPeriod;
-                          });
-                        },
-                        child: Text('조금'),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      ElevatedButton(
+                      '할일을 작성해주세요'.text.bold.headline6(context).make(),
+                      spacer,
+                      IconButton(
                         onPressed: () {},
-                        child: Text('적당히'),
+                        icon: Icon(Icons.calendar_month),
                       ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: Text('매우'),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: Text('절대 까먹어서는 안됨'),
-                      ),
-                      SizedBox(
-                        width: 8,
-                      ),
+                      height20,
                     ],
                   ),
-                ),
-              ),
-              SwitchListTile.adaptive(
-                contentPadding: EdgeInsets.zero,
-                title: '날짜 설정'.text.bold.headline6(context).make(),
-                value: isDate,
-                onChanged: (value) {
-                  setState(() {
-                    isDate = value;
-                  });
-                },
-              ),
-              isDate ?
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () async {
-                      final result = await showDatePicker(
-                        context: context,
-                        initialDate: now,
-                        firstDate: DateTime(2022),
-                        lastDate: DateTime(2024),
-                      );
-                      if (result != null) {
-                        setState(() {
-                          _selectedDate = result;
-                        });
-                      }
-                    },
-                    icon: Icon(Icons.calendar_today),
+                  TextFormField(
+                      controller: textController,
+                      focusNode: node,
+                      maxLength: 100,
+                      decoration: InputDecoration(
+                        hintText: '다이소가서 물건 사기 (세제, 치약 등)',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "제품명을 입력해주세요.";
+                        }
+                        return null;
+                      }),
+                  '얼마나 중요한 일 인가요?'.text.bold.headline6(context).make(),
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    height: 50,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                isPeriod = !isPeriod;
+                              });
+                            },
+                            child: Text('조금'),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: Text('적당히'),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: Text('매우'),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {},
+                            child: Text('절대 까먹어서는 안됨'),
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  Text(_selectedDate.toString().split(' ')[0]),
+                  SwitchListTile.adaptive(
+                    contentPadding: EdgeInsets.zero,
+                    title: '날짜 설정'.text.bold.headline6(context).make(),
+                    value: isDate,
+                    onChanged: (value) {
+                      setState(() {
+                        isDate = value;
+                      });
+                    },
+                  ),
+                  isDate
+                      ? Row(
+                          children: [
+                            IconButton(
+                              onPressed: () async {
+                                final result = await showDatePicker(
+                                  context: context,
+                                  initialDate: now,
+                                  firstDate: DateTime(2022),
+                                  lastDate: DateTime(2024),
+                                );
+                                if (result != null) {
+                                  setState(() {
+                                    _selectedDate = result;
+                                  });
+                                }
+                              },
+                              icon: Icon(Icons.calendar_today),
+                            ),
+                            Text(_selectedDate.toString().split(' ')[0]),
+                          ],
+                        )
+                      : Container(),
+                  SwitchListTile.adaptive(
+                    contentPadding: EdgeInsets.zero,
+                    title: '기간 설정'.text.bold.headline6(context).make(),
+                    value: isPeriod,
+                    onChanged: (value) {
+                      setState(() {
+                        isPeriod = value;
+                      });
+                    },
+                  ),
+                  isPeriod
+                      ? Row(
+                          children: [
+                            IconButton(
+                              onPressed: () async {
+                                final result = await showDatePicker(
+                                  context: context,
+                                  initialDate: now,
+                                  firstDate: DateTime(2022),
+                                  lastDate: DateTime(2024),
+                                );
+                                if (result != null) {
+                                  setState(() {
+                                    _selectedDate = result;
+                                  });
+                                }
+                              },
+                              icon: Icon(Icons.calendar_today),
+                            ),
+                            Text(_selectedDate.toString().split(' ')[0]),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            '~'.text.bodyText1(context).make(),
+                            IconButton(
+                              onPressed: () async {
+                                final result = await showDatePicker(
+                                  context: context,
+                                  initialDate: _selectedDate ?? _selectedDate!,
+                                  firstDate: DateTime(2022),
+                                  lastDate: DateTime(2024),
+                                );
+                                if (result != null &&
+                                    result.isAfter(_selectedDate!) &&
+                                    isPeriod) {
+                                  setState(() {
+                                    _selectedDate = result;
+                                  });
+                                }
+                              },
+                              icon: Icon(Icons.calendar_today),
+                            ),
+                            Text(_selectedDate.toString().split(' ')[0]),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            '까지'.text.bodyText1(context).make(),
+                          ],
+                        )
+                      : Container(),
+                  Positioned(
+                    bottom: 0,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('저장'),
+                      ),
+                    ),
+                  ).p(20),
                 ],
-              ) : Container(),
-
-              SwitchListTile.adaptive(
-                contentPadding: EdgeInsets.zero,
-                title: '기간 설정'.text.bold.headline6(context).make(),
-                value: isPeriod,
-                onChanged: (value) {
-                  setState(() {
-                    isPeriod = value;
-                  });
-                },
-              ),
-              isPeriod
-                  ? Row(
-                      children: [
-                        IconButton(
-                          onPressed: () async {
-                            final result = await showDatePicker(
-                              context: context,
-                              initialDate: now,
-                              firstDate: DateTime(2022),
-                              lastDate: DateTime(2024),
-                            );
-                            if (result != null) {
-                              setState(() {
-                                _selectedDate = result;
-                              });
-                            }
-                          },
-                          icon: Icon(Icons.calendar_today),
-                        ),
-                        Text(_selectedDate.toString().split(' ')[0]),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        '~'.text.bodyText1(context).make(),
-                        IconButton(
-                          onPressed: () async {
-                            final result = await showDatePicker(
-                              context: context,
-                              initialDate: _selectedDate ?? _selectedDate! ,
-                              firstDate: DateTime(2022),
-                              lastDate: DateTime(2024),
-                            );
-                            if (result != null && result.isAfter(_selectedDate!) && isPeriod) {
-                              setState(() {
-                                _selectedDate = result;
-                              });
-                            }
-                          },
-                          icon: Icon(Icons.calendar_today),
-                        ),
-                        Text(_selectedDate.toString().split(' ')[0]),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        '까지'.text.bodyText1(context).make(),
-                      ],
-                    )
-                  : Container(),
-            ],
-          ).p(16),
+              ).p(16),
         ),
       ),
-    );
+    ).p(20);
   }
 }

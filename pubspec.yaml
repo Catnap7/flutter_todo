@@ -57,6 +57,15 @@ dependencies:
   # 고유의 id 값 생성을 위한 패키지
   uuid: ^3.0.5
 
+  # model 생성 편하게 하려고 추가한 패키지
+  freezed: ^2.4.2
+  json_annotation: ^4.8.1
+  freezed_annotation: ^2.4.1
+
+  # 상태관리
+  riverpod:
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -69,7 +78,6 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
   # json 서버 통신을 위한 패키지
-  freezed: ^2.4.2
   json_serializable: ^6.7.1
   build_runner: ^2.4.6
 
