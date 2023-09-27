@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todolist/screen/main/tab/calendar/f_calendar.dart';
-import 'package:flutter_todolist/screen/main/tab/home/f_home.dart';
-import 'package:flutter_todolist/screen/main/tab/setting/f_setting.dart';
+import 'package:flutter_todolist/screen/main/tab/calendar/calendar_fragment.dart';
+import 'package:flutter_todolist/screen/main/tab/home/home_fragment.dart';
+import 'package:flutter_todolist/screen/main/tab/setting/settings_fregment.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class HomeScreen extends StatefulWidget {

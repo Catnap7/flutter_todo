@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todolist/common/routes/routes.dart';
 import 'package:flutter_todolist/common/theme/text_theme.dart';
-import 'package:flutter_todolist/screen/main/tab/home/s_home.dart';
+import 'package:flutter_todolist/screen/main/tab/home/home_screen.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(const ProviderScope(child: MyApp()));
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
