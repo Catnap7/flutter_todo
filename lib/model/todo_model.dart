@@ -6,6 +6,7 @@ part 'todo_model.g.dart';
 @freezed
 sealed class Todo with _$Todo {
   factory Todo({
+    required String id,
     required String title,
     required bool isCompleted,
     DateTime? periodEnd,

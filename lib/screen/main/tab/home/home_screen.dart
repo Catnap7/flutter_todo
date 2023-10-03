@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
-        title: const Text('도마도'),
+        // title: const Text('도마도'),
         leading: IconButton(
           onPressed: () {},
           icon: Image.asset('assets/image/logo/domado_logo.png'),

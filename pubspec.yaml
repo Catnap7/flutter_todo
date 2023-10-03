@@ -64,7 +64,7 @@ dependencies:
 
   # 상태관리
   flutter_riverpod:
-
+  riverpod_annotation:
 
 dev_dependencies:
   flutter_test:
