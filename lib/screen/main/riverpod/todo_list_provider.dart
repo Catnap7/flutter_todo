@@ -7,14 +7,14 @@ const _uuid = Uuid();
 class TodoList extends StateNotifier<List<Todo>> {
   TodoList([List<Todo>? initialTodos]) : super(initialTodos ?? []);
 
-  void add(String title, String important, DateTime periodEnd) {
+  void add({required String title, required String todoImportant, DateTime? periodEnd}) {
     state = [
       ...state,
       Todo(
         id: _uuid.v4(),
         title: title,
         isCompleted: false,
-        todoImportant: important,
+        todoImportant: todoImportant,
         date: DateTime.now(),
         periodEnd: periodEnd,
       ),
@@ -61,11 +61,7 @@ class TodoList extends StateNotifier<List<Todo>> {
 }
 
 final todoListProvider = StateNotifierProvider<TodoList, List<Todo>>((ref) {
-  return TodoList( [
-    Todo(id: 'todo-0', isCompleted: false, title: 'hello', todoImportant: '중요', date: DateTime.now(), periodEnd: DateTime.now()),
-    Todo(id: 'todo-0', isCompleted: false, title: 'hello123', todoImportant: '중요', date: DateTime.now(), periodEnd: DateTime.now()),
-    Todo(id: 'todo-0', isCompleted: false, title: 'hello214', todoImportant: '중요', date: DateTime.now(), periodEnd: DateTime.now()),
-  ]);
+  return TodoList( []);
 });
 
 enum Filter {
