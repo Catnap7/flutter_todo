@@ -1,11 +1,8 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todolist/common/common.dart';
-import 'package:flutter_todolist/common/widget/scaffold/bottom_dialog_scaffold.dart';
+import 'package:flutter_todolist/common/util/utill.dart';
 import 'package:flutter_todolist/common/widget/round_container_widget.dart';
-import 'package:after_layout/after_layout.dart';
-import 'package:flutter_todolist/model/todo_model.dart';
 import 'package:flutter_todolist/screen/main/riverpod/todo_list_provider.dart';
 import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 
@@ -65,7 +62,7 @@ class _WriteTodoDialogState extends ConsumerState<WriteTodoDialog> {
                   focusNode: node,
                   maxLength: 100,
                   decoration: InputDecoration(
-                    hintText: '다이소가서 물건 사기 (세제, 치약 등)',
+                    hintText: '다이소가서 치약 구매하기',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -79,19 +76,15 @@ class _WriteTodoDialogState extends ConsumerState<WriteTodoDialog> {
               '얼마나 중요한 일 인가요?'.text.bold.headline6(context).make(),
               const SizedBox(height: 8),
               CustomRadioButton(
-                buttonLables: [
-                  '매우 중요',
-                  '중요',
+                buttonLables: const [
+                  '매우',
                   '보통',
-                  '적당히',
-                  '사소함',
+                  '조금',
                 ],
-                buttonValues: [
+                buttonValues: const [
                   'very',
-                  'more',
                   'normal',
                   'less',
-                  'not',
                 ],
                 radioButtonValue: (value) {
                   print(value);
@@ -217,18 +210,16 @@ class _WriteTodoDialogState extends ConsumerState<WriteTodoDialog> {
                   alignment: Alignment.bottomCenter,
                   child: ElevatedButton(
                     onPressed: () {
-                      if(textController.text.trim().isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('할일을 입력해주세요.'),
-                          ),
-                        );
+                      if (textController.text.trim().isEmpty) {
+                        showSnackBar(context, '할일을 입력해주세요.');
                         return;
                       }
                       ref.read(todoListProvider.notifier).add(
                           title: textController.text,
                           todoImportant: 'less',
                           periodEnd: _selectedDate!);
+                      showSnackBar(context, '저장되었습니다.');
+                      Navigator.pop(context);
                     },
                     child: Text('저장'),
                   ),

@@ -80,9 +80,9 @@ final filteredTodoListProvider = Provider<List<Todo>>((ref) {
     case Filter.none:
       return todoList;
     case Filter.completed:
-      return todoList!.where((todo) => todo.isCompleted).toList();
+      return todoList.where((todo) => todo.isCompleted).toList();
     case Filter.uncompleted:
-      return todoList!.where((todo) => !todo.isCompleted).toList();
+      return todoList.where((todo) => !todo.isCompleted).toList();
     default:
       return todoList;
   }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todolist/common/routes/routes.dart';
-import 'package:flutter_todolist/common/theme/text_theme.dart';
+import 'package:flutter_todolist/common/theme/custom/custom_theme.dart';
+import 'package:flutter_todolist/common/theme/theme_data.dart';
 import 'package:flutter_todolist/screen/main/tab/home/home_screen.dart';
 
 void main() => runApp(const ProviderScope(child: MyApp()));
@@ -14,15 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Flutter Todo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
-        textTheme: CustomTextTheme.customTextTheme,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.redAccent),
-        useMaterial3: true,
-      ),
+      theme: CustomThemeData.themeData,
       routerConfig: router,
     );
   }

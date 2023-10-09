@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_todolist/common/common.dart';
 import 'package:flutter_todolist/screen/main/tab/calendar/calendar_fragment.dart';
 import 'package:flutter_todolist/screen/main/tab/home/home_fragment.dart';
 import 'package:flutter_todolist/screen/main/tab/setting/settings_fregment.dart';
@@ -12,16 +14,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   final PersistentTabController _controller =
-  PersistentTabController(initialIndex: 0);
+      PersistentTabController(initialIndex: 0);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
-        // title: const Text('도마도'),
+        title: _controller.index == 0
+            ? "퀘스트목록".text.bold.headline6(context).make()
+            : _controller.index == 1
+                ? "달력".text.bold.headline6(context).make()
+                : "설정".text.bold.headline6(context).make(),
         leading: IconButton(
           onPressed: () {},
           icon: Image.asset('assets/image/logo/domado_logo.png'),
@@ -38,18 +43,18 @@ class _HomeScreenState extends State<HomeScreen> {
         context,
         controller: _controller,
         screens: _buildScreens(),
+        onItemSelected: (index) {
+          setState(() {
+            _controller.index = index;
+          });
+        },
         items: _navBarsItems(),
         confineInSafeArea: true,
         backgroundColor: Theme.of(context).colorScheme.background,
-        // Default is Colors.white.
         handleAndroidBackButtonPress: true,
-        // Default is true.
         resizeToAvoidBottomInset: true,
-        // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
         stateManagement: true,
-        // Default is true.
         hideNavigationBarWhenKeyboardShows: true,
-        // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
         decoration: NavBarDecoration(
           borderRadius: BorderRadius.circular(10.0),
           colorBehindNavBar: Theme.of(context).colorScheme.background,
@@ -72,40 +77,39 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 List<PersistentBottomNavBarItem> _navBarsItems() => [
-  PersistentBottomNavBarItem(
-      icon: const Icon(Icons.home),
-      title: "홈",
-      activeColorPrimary: Colors.blue,
-      inactiveColorPrimary: Colors.grey,
-      inactiveColorSecondary: Colors.purple),
-  PersistentBottomNavBarItem(
-    icon: const Icon(Icons.calendar_today),
-    title: "달력",
-    activeColorPrimary: Colors.teal,
-    inactiveColorPrimary: Colors.grey,
-    routeAndNavigatorSettings: RouteAndNavigatorSettings(
-      // initialRoute: "/",
-      /* routes: {
+      PersistentBottomNavBarItem(
+          icon: const Icon(Icons.home),
+          title: "홈",
+          activeColorPrimary: Colors.blue,
+          inactiveColorPrimary: Colors.grey,
+          inactiveColorSecondary: Colors.purple),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.calendar_today),
+        title: "달력",
+        activeColorPrimary: Colors.teal,
+        inactiveColorPrimary: Colors.grey,
+        routeAndNavigatorSettings: RouteAndNavigatorSettings(
+            // initialRoute: "/",
+            /* routes: {
               "/first": (final context) => const HomeFragment(),
               "/second": (final context) => const CalendarFragment(),
             },*/
-    ),
-  ),
-  PersistentBottomNavBarItem(
-    icon: const Icon(Icons.settings),
-    title: "설정",
-    activeColorPrimary: Colors.deepOrange,
-    inactiveColorPrimary: Colors.grey,
-    routeAndNavigatorSettings: RouteAndNavigatorSettings(
-      // initialRoute: "/",
-      /* routes: {
+            ),
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(Icons.settings),
+        title: "설정",
+        activeColorPrimary: Colors.deepOrange,
+        inactiveColorPrimary: Colors.grey,
+        routeAndNavigatorSettings: RouteAndNavigatorSettings(
+            // initialRoute: "/",
+            /* routes: {
               "/first": (final context) => const HomeFragment(),
               "/second": (final context) => const CalendarFragment(),
             },*/
-    ),
-  ),
-];
-
+            ),
+      ),
+    ];
 
 List<Widget> _buildScreens() {
   return [
