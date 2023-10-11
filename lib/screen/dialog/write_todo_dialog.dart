@@ -15,21 +15,18 @@ class WriteTodoDialog extends ConsumerStatefulWidget {
 
 class _WriteTodoDialogState extends ConsumerState<WriteTodoDialog> {
   final DateTime now = DateTime.now();
-  DateTime? _selectedDate = DateTime.now();
   DateTime? _selectedEndPeriod;
   final textController = TextEditingController();
   final node = FocusNode();
+  String important = 'normal';
+  DateTime? _selectedDate = DateTime(2023 - 01 - 01);
+  TimeOfDay _time = TimeOfDay.now();
 
   // 기간 설정 여부
   bool isPeriod = false;
 
   // 구체적인 날짜 설정 여부
   bool isDate = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +59,7 @@ class _WriteTodoDialogState extends ConsumerState<WriteTodoDialog> {
                   focusNode: node,
                   maxLength: 100,
                   decoration: InputDecoration(
-                    hintText: '다이소가서 치약 구매하기',
+                    hintText: '다이소에서 치약 구매하기',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -87,7 +84,7 @@ class _WriteTodoDialogState extends ConsumerState<WriteTodoDialog> {
                   'less',
                 ],
                 radioButtonValue: (value) {
-                  print(value);
+                  important = value;
                 },
                 defaultSelected: 'normal',
                 buttonTextStyle: ButtonTextStyle(
@@ -138,9 +135,24 @@ class _WriteTodoDialogState extends ConsumerState<WriteTodoDialog> {
                               });
                             }
                           },
-                          icon: Icon(Icons.calendar_today),
+                          icon: const Icon(Icons.calendar_today),
                         ),
                         Text(_selectedDate.toString().split(' ')[0]),
+                        IconButton(
+                          onPressed: () async {
+                            final TimeOfDay? pickedTime = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                            );
+                            if (pickedTime != null) {
+                              setState(() {
+                                _time = pickedTime;
+                              });
+                            }
+                          },
+                          icon: Icon(Icons.access_time),
+                        ),
+                        "${_time.hour} : ${_time.minute}".text.bodyText1(context).make(),
                       ],
                     )
                   : Container(),
@@ -200,7 +212,6 @@ class _WriteTodoDialogState extends ConsumerState<WriteTodoDialog> {
                         SizedBox(
                           width: 8,
                         ),
-                        '까지'.text.bodyText1(context).make(),
                       ],
                     )
                   : Container(),
@@ -216,8 +227,9 @@ class _WriteTodoDialogState extends ConsumerState<WriteTodoDialog> {
                       }
                       ref.read(todoListProvider.notifier).add(
                           title: textController.text,
-                          todoImportant: 'less',
-                          periodEnd: _selectedDate!);
+                          todoImportant: important,
+                          date: isDate ? _selectedDate : null,
+                          periodEnd: isPeriod ? _selectedDate : null);
                       showSnackBar(context, '저장되었습니다.');
                       Navigator.pop(context);
                     },

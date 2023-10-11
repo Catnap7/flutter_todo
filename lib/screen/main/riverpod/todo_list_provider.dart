@@ -7,7 +7,7 @@ const _uuid = Uuid();
 class TodoList extends StateNotifier<List<Todo>> {
   TodoList([List<Todo>? initialTodos]) : super(initialTodos ?? []);
 
-  void add({required String title, required String todoImportant, DateTime? periodEnd}) {
+  void add({required String title, required String todoImportant, DateTime? date, DateTime? periodEnd}) {
     state = [
       ...state,
       Todo(
@@ -15,7 +15,7 @@ class TodoList extends StateNotifier<List<Todo>> {
         title: title,
         isCompleted: false,
         todoImportant: todoImportant,
-        date: DateTime.now(),
+        date: date,
         periodEnd: periodEnd,
       ),
     ];
@@ -71,6 +71,10 @@ enum Filter {
 }
 
 final filterProvider = StateProvider((ref) => Filter.none);
+
+final completedTodoCountProvider = Provider<int>((ref) {
+  return ref.watch(todoListProvider).where((todo) => todo.isCompleted).length;
+});
 
 final filteredTodoListProvider = Provider<List<Todo>>((ref) {
   final filter = ref.watch(filterProvider);

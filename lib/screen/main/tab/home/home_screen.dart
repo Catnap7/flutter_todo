@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.background,
         title: _controller.index == 0
-            ? "퀘스트목록".text.bold.headline6(context).make()
+            ? "할일 목록".text.bold.headline6(context).make()
             : _controller.index == 1
                 ? "달력".text.bold.headline6(context).make()
                 : "설정".text.bold.headline6(context).make(),

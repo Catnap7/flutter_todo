@@ -21,3 +21,19 @@ String getImportantText(String important) {
       return '보통';
   }
 }
+
+String getDifferenceDate(DateTime date) {
+  final now = DateTime.now();
+  final difference = now.difference(date);
+  final days = difference.inDays;
+  final hours = difference.inHours;
+
+
+  if (days > 0) {
+    return 'D-$days';
+  } else if (hours > 0) {
+    return 'D-$hours';
+  } else {
+    return 'D-Day';
+  }
+}

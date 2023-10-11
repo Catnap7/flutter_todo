@@ -17,6 +17,9 @@ class _HomeFragmentState extends ConsumerState<HomeFragment> {
   Widget build(BuildContext context) {
     final todoList = ref.watch(todoListProvider);
     final filteredTodoList = ref.watch(filteredTodoListProvider);
+    final filter = ref.watch(filterProvider);
+    final completedTodoCount = ref.watch(completedTodoCountProvider);
+    final uncompletedTodoCount = todoList.length - completedTodoCount;
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -32,15 +35,21 @@ class _HomeFragmentState extends ConsumerState<HomeFragment> {
         child: Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                "진행중:${todoList.length}".text.headline6(context).make().pOnly(left: 16, top: 16, bottom: 8),
+                "진행중:$uncompletedTodoCount".text.headline6(context).make(),
                 DropdownButton(
-                  value: ref.watch(filterProvider),
-                  onChanged: (value) => ref.read(filterProvider.notifier).state = value as Filter,
+                  value: filter,
+                  onChanged: (value) =>
+                      ref.read(filterProvider.notifier).state = value as Filter,
                   items: Filter.values
                       .map((e) => DropdownMenuItem(
                             value: e,
-                            child: e.toString().text.make(),
+                            child: e == Filter.uncompleted
+                                ? "미완료".text.make()
+                                : e == Filter.none
+                                    ? "전체".text.make()
+                                    : "완료".text.make(),
                           ))
                       .toList(),
                 ),
@@ -57,9 +66,13 @@ class _HomeFragmentState extends ConsumerState<HomeFragment> {
                       final todo = filteredTodoList[index];
                       return ListTile(
                         title: todo.title.text.make(),
-                        subtitle: "중요도: ${getImportantText(todo.todoImportant)}"
-                            .text
-                            .make(),
+                        subtitle:
+                            todo.date == null ?
+                            "중요도: ${getImportantText(todo.todoImportant)}"
+                                .text
+                                .make() : "중요도: ${getImportantText(todo.todoImportant)} / ${getDifferenceDate(todo.date!)}"
+                                .text
+                                .make(),
                         trailing: SizedBox(
                           width: 100,
                           child: Row(
@@ -91,7 +104,7 @@ class _HomeFragmentState extends ConsumerState<HomeFragment> {
                 ],
               ),
             ),
-            "완료: 5".text.headline6(context).make().pOnly(left: 16, top: 16, bottom: 8),
+            "완료:$completedTodoCount".text.headline6(context).make(),
           ],
         ),
       ),
