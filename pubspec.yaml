@@ -40,6 +40,8 @@ dependencies:
   velocity_x: ^4.1.1
   custom_radio_grouped_button:
 
+  # 달력
+  table_calendar:
 
   # 화면을 생성하고 난 후 특정 작업을 하기 위한 패키지
   after_layout: ^1.2.0

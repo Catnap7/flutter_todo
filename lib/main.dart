@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todolist/common/routes/routes.dart';
-import 'package:flutter_todolist/common/theme/custom/custom_theme.dart';
 import 'package:flutter_todolist/common/theme/theme_data.dart';
-import 'package:flutter_todolist/screen/main/tab/home/home_screen.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
-void main() => runApp(const ProviderScope(child: MyApp()));
+void main() => initializeDateFormatting('ko_KR',null).then((_)=>runApp(const ProviderScope(child: MyApp())));
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
