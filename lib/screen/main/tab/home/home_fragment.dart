@@ -13,6 +13,7 @@ class HomeFragment extends ConsumerStatefulWidget {
 }
 
 class _HomeFragmentState extends ConsumerState<HomeFragment> {
+
   @override
   Widget build(BuildContext context) {
     final todoList = ref.watch(todoListProvider);
