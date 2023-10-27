@@ -222,7 +222,7 @@ class _WriteTodoDialogState extends ConsumerState<WriteTodoDialog> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (textController.text.trim().isEmpty) {
-                        showSnackBar(context, '할일을 입력해주세요.');
+                        showSnackBar(context, '할일을 입력해주세요');
                         return;
                       }
                       ref.read(todoListProvider.notifier).add(
@@ -230,7 +230,7 @@ class _WriteTodoDialogState extends ConsumerState<WriteTodoDialog> {
                           todoImportant: important,
                           date: isDate ? _selectedDate : null,
                           periodEnd: isPeriod ? _selectedDate : null);
-                      showSnackBar(context, '저장되었습니다.');
+                      showSnackBar(context, '저장되었습니다',);
                       Navigator.pop(context);
                     },
                     child: Text('저장'),

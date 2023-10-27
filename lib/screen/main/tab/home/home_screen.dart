@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todolist/common/common.dart';
 import 'package:flutter_todolist/screen/main/tab/calendar/calendar_fragment.dart';
 import 'package:flutter_todolist/screen/main/tab/home/home_fragment.dart';
@@ -29,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 : "설정".text.bold.headline6(context).make(),
         leading: IconButton(
           onPressed: () {},
-          icon: Image.asset('assets/image/logo/domado_logo.png'),
+          icon: Image.asset('assets/image/logo/easy_todo_logo.png'),
         ),
         centerTitle: true,
         actions: [

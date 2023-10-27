@@ -1,8 +1,8 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_todolist/common/util/utill.dart';
+import 'package:flutter_todolist/model/todo_model.dart';
 import 'package:flutter_todolist/screen/main/riverpod/todo_list_provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -18,19 +18,39 @@ class _CalendarFragmentState extends ConsumerState<CalendarFragment> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-
-  final kEvents = LinkedHashMap<DateTime, List<CalendarEvent>>(
-    equals: isSameDay,
-    hashCode: getHashCode,
-  )..addAll(_kEventSource);
+  final List<Todo> todoList = [];
 
   @override
   void initState() {
     super.initState();
-    _selectedEvents = ValueNotifier(_getEventsForDay(_focusedDay));
+    _selectedDay = _focusedDay;
+    todoList.addAll(ref.read(filteredTodoListProvider));
+    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+  }
+
+  @override
+  void dispose() {
+    _selectedEvents.dispose();
+    super.dispose();
   }
 
   List<CalendarEvent> _getEventsForDay(DateTime day) {
+
+    final kEventSource = LinkedHashMap.fromIterable(
+      todoList.where((element) => element.isCompleted == false),
+      key: (item) => DateTime(item.date.year, item.date.month, item.date.day),
+      value: (item) => [
+        CalendarEvent(item.title),
+      ],
+    );
+
+    final kEvents = LinkedHashMap<DateTime, List<CalendarEvent>>(
+      equals: isSameDay,
+      hashCode: getHashCode,
+    )..addAll(
+      kEventSource,
+    );
+
     return kEvents[day] ?? [];
   }
 
@@ -39,9 +59,6 @@ class _CalendarFragmentState extends ConsumerState<CalendarFragment> {
       setState(() {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
-        // _rangeStart = null; // Important to clean those
-        // _rangeEnd = null;
-        // _rangeSelectionMode = RangeSelectionMode.toggledOff;
       });
       _selectedEvents.value = _getEventsForDay(selectedDay);
     }
@@ -49,9 +66,6 @@ class _CalendarFragmentState extends ConsumerState<CalendarFragment> {
 
   @override
   Widget build(BuildContext context) {
-
-    // final filteredTodoList = ref.watch(filteredTodoListProvider);
-
 
     return Column(
       children: [
@@ -61,10 +75,9 @@ class _CalendarFragmentState extends ConsumerState<CalendarFragment> {
           lastDay: kLastDay,
           focusedDay: _focusedDay,
           calendarFormat: _calendarFormat,
-          selectedDayPredicate: (day) {
-            return isSameDay(_selectedDay, day);
-          },
+          selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
           eventLoader: _getEventsForDay,
+          startingDayOfWeek: StartingDayOfWeek.monday,
           onDaySelected: _onDaySelected,
           onFormatChanged: (format) {
             if (_calendarFormat != format) {

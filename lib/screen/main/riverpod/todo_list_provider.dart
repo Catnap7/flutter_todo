@@ -65,9 +65,9 @@ final todoListProvider = StateNotifierProvider<TodoList, List<Todo>>((ref) {
 });
 
 enum Filter {
-  none,
-  completed,
   uncompleted,
+  completed,
+  none,
 }
 
 final filterProvider = StateProvider((ref) => Filter.none);

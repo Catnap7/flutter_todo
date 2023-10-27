@@ -4,6 +4,7 @@ import 'package:flutter_todolist/common/common.dart';
 import 'package:flutter_todolist/common/util/utill.dart';
 import 'package:flutter_todolist/screen/dialog/write_todo_dialog.dart';
 import 'package:flutter_todolist/screen/main/riverpod/todo_list_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeFragment extends ConsumerStatefulWidget {
   const HomeFragment({super.key});
@@ -14,20 +15,32 @@ class HomeFragment extends ConsumerStatefulWidget {
 
 class _HomeFragmentState extends ConsumerState<HomeFragment> {
 
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  @override
+  void initState() {
+    super.initState();
+    _prefs.then((value) {
+      final todoList = value.getStringList("todoList");
+      if (todoList != null) {
+        ref.read(todoListProvider.notifier).add();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final todoList = ref.watch(todoListProvider);
     final filteredTodoList = ref.watch(filteredTodoListProvider);
     final filter = ref.watch(filterProvider);
     final completedTodoCount = ref.watch(completedTodoCountProvider);
-    final uncompletedTodoCount = todoList.length - completedTodoCount;
+    final uncompletedTodoCount = ref.watch(todoListProvider).length - completedTodoCount;
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
             context: context,
-            builder: (context) => WriteTodoDialog(),
+            builder: (context) => const WriteTodoDialog(),
           );
         },
         child: const Icon(Icons.add),
@@ -38,13 +51,12 @@ class _HomeFragmentState extends ConsumerState<HomeFragment> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                "진행중:$uncompletedTodoCount".text.headline6(context).make(),
+                "진행중:$uncompletedTodoCount / 완료:$completedTodoCount".text.bodyText1(context).make(),
                 DropdownButton(
                   value: filter,
                   onChanged: (value) =>
                       ref.read(filterProvider.notifier).state = value as Filter,
-                  items: Filter.values
-                      .map((e) => DropdownMenuItem(
+                  items: Filter.values.map((e) => DropdownMenuItem(
                             value: e,
                             child: e == Filter.uncompleted
                                 ? "미완료".text.make()
@@ -71,7 +83,7 @@ class _HomeFragmentState extends ConsumerState<HomeFragment> {
                             todo.date == null ?
                             "중요도: ${getImportantText(todo.todoImportant)}"
                                 .text
-                                .make() : "중요도: ${getImportantText(todo.todoImportant)} / ${getDifferenceDate(todo.date!)}"
+                                .make() : "중요도: ${getImportantText(todo.todoImportant)} / ${todo.date}"
                                 .text
                                 .make(),
                         trailing: SizedBox(
@@ -105,10 +117,10 @@ class _HomeFragmentState extends ConsumerState<HomeFragment> {
                 ],
               ),
             ),
-            "완료:$completedTodoCount".text.headline6(context).make(),
           ],
         ),
       ),
     );
   }
+
 }
